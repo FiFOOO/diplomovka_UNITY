@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+__all__ = ["QtCore", "QtGui", "QtWidgets"]
+
 
 class Ui_MainWindow(object):
     def __init__(self, MainWindow):
@@ -71,7 +73,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.tabWidget.setToolTip(_translate("MainWindow", "<html><head/><body><p>fsddf</p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_1), _translate("MainWindow", "untitled1"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "untitled2"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
@@ -82,24 +83,29 @@ class Ui_MainWindow(object):
     def saveFile(self):
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        fileName, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save as...", "", "All Files (*);;Text Files (*.txt)", options=options)
+        fileName, _ = QtWidgets.QFileDialog.getSaveFileName(
+            None, "Save as...", "", "All Files (*);;Text Files (*.txt)", options=options
+        )
         if fileName:
             t = self.plainTextEdit_1.toPlainText()
-            with open(fileName, 'w') as f:
+            with open(fileName, "w") as f:
                 f.write(t)
 
     def loadFile(self):
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        files, _ = QtWidgets.QFileDialog.getOpenFileNames(None, "Open file", "", "All Files (*);;Text Files (*.txt)", options=options)
+        files, _ = QtWidgets.QFileDialog.getOpenFileNames(
+            None, "Open file", "", "All Files (*);;Text Files (*.txt)", options=options
+        )
         if files:
-            with open(files[0], 'r') as f:
+            with open(files[0], "r") as f:
                 text = f.read()
                 self.plainTextEdit_1.appendPlainText(text)
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow(MainWindow)
