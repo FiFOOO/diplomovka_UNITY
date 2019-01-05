@@ -23,12 +23,12 @@ const configurator = {
             }
 
             let key = entry.replace(
-                /(\.\/assets\/(src|js|css|go)\/)|\.(ts|js|s[ac]ss|go)/g,
+                /(\.\/assets\/(src|js|css|go)\/)|\.(ts|js[x]|s[ac]ss|go)/g,
                 ''
             );
             if (
                 key.startsWith('_') ||
-                /(ts|js|s[ac]ss|go)$/i.test(entry) == false
+                /(ts|js|jsx|s[ac]ss|go)$/i.test(entry) == false
             ) {
                 return;
             }

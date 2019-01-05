@@ -9,9 +9,10 @@
   <body>
     <%= partial("nav.html") %>
 
-    <!-- <div class="container"><%= yield %></div> -->
+    <div class="container"><%= yield %></div>
     <div id="content"></div>
 
-    <%= partial("footer.html") %> <%= javascriptTag("application.js") %>
+    <%= partial("footer.html") %> <%= javascriptTag("application.js") %> <%=
+    javascriptTag("mainPage.js") %>
   </body>
 </html>
