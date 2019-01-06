@@ -2,8 +2,8 @@
 # https://docs.docker.com/engine/userguide/eng-image/multistage-build/
 FROM gobuffalo/buffalo:v0.13.12 as builder
 
-RUN mkdir -p $GOPATH/src/github.com/Filip/unity_verificator
-WORKDIR $GOPATH/src/github.com/Filip/unity_verificator
+RUN mkdir -p $GOPATH/src/github.com/Filip/diplomovka_UNITY/unity_verificator
+WORKDIR $GOPATH/src/github.com/Filip/diplomovka_UNITY/unity_verificator
 
 # this will cache the npm install step, unless package.json changes
 ADD package.json .

@@ -17,13 +17,26 @@ const configurator = {
             ]
         };
 
+        Glob.sync('./assets/src/*/*.*').forEach(entry => {
+            let key = entry.replace(
+                /(\.\/assets\/src\/(layouts|pages|components)\/)|\.(ts|js[x]|s[ac]ss|go)/g,
+                ''
+            );
+
+            if (entries[key] == null) {
+                entries[key] = [entry];
+                return;
+            }
+            entries[key].push(entry);
+        });
+
         Glob.sync('./assets/*/*.*').forEach(entry => {
             if (entry === './assets/css/application.scss') {
                 return;
             }
 
             let key = entry.replace(
-                /(\.\/assets\/(src|js|css|go)\/)|\.(ts|js[x]|s[ac]ss|go)/g,
+                /(\.\/assets\/(src|js|css|go)\/)|\.(ts|js|s[ac]ss|go)/g,
                 ''
             );
             if (
