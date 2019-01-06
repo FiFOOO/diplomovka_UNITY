@@ -42,35 +42,27 @@ func App() *buffalo.App {
 			SessionName: "_unity_verificator_session",
 		})
 
-		// Automatically redirect to SSL
 		app.Use(forceSSL())
-
-		// Log request parameters (filters apply).
 		app.Use(paramlogger.ParameterLogger)
-
-		// Protect against CSRF attacks. https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
-		// Remove to disable this.
 		app.Use(csrf.New)
-
-		// Wraps each request in a transaction.
-		//  c.Value("tx").(*pop.Connection)
-		// Remove to disable this.
 		app.Use(popmw.Transaction(models.DB))
-
-		// Setup and use translations:
 		app.Use(translations())
 
-		app.GET("/", HomeHandler)
+		app.GET("/", IndexHandler)
+		app.GET("/domov", HomeHandler)
+		app.GET("/popis", DescHandler)
+		app.GET("/progres", ProgressHandler)
+		app.GET("/linky", LinksxHandler)
+		app.GET("/aplikacia", ResultHandler)
 
-		app.Use(func (next buffalo.Handler) buffalo.Handler {
-					return func(c buffalo.Context) error {
-						c.Set("year", time.Now().Year())
-						return next(c)
-					}
-				})
-		app.ServeFiles("/", assetsBox) // serve files from the public directory
+		app.Use(func(next buffalo.Handler) buffalo.Handler {
+			return func(c buffalo.Context) error {
+				c.Set("year", time.Now().Year())
+				return next(c)
+			}
+		})
+		app.ServeFiles("/", assetsBox)
 	}
-
 	return app
 }
 

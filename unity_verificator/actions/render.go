@@ -10,18 +10,9 @@ var assetsBox = packr.NewBox("../public")
 
 func init() {
 	r = render.New(render.Options{
-		// HTML layout to be used for all HTML requests:
-		HTMLLayout: "application.html",
-
-		// Box containing all of the templates:
+		HTMLLayout:   "application.html",
 		TemplatesBox: packr.NewBox("../templates"),
 		AssetsBox:    assetsBox,
-
-		// Add template helpers here:
-		Helpers: render.Helpers{
-			// uncomment for non-Bootstrap form helpers:
-			// "form":     plush.FormHelper,
-			// "form_for": plush.FormForHelper,
-		},
+		Helpers:      render.Helpers{},
 	})
 }

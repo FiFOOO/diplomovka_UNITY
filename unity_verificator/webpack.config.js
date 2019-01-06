@@ -60,7 +60,7 @@ const configurator = {
         var plugins = [
             new CleanObsoleteChunks(),
             new Webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }),
-            new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
+            new MiniCssExtractPlugin({ filename: 'style.css' }),
             new CopyWebpackPlugin([{ from: './assets', to: '' }], {
                 copyUnmodified: true,
                 ignore: ['css/**', 'js/**', 'src/**']
@@ -110,7 +110,7 @@ const configurator = {
             mode: env,
             entry: configurator.entries(),
             output: {
-                filename: '[name].[hash].js',
+                filename: '[name].js',
                 path: `${__dirname}/public/assets`
             },
             plugins: configurator.plugins(),

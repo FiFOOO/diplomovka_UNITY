@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Unity Verificator</title>
-    <%= stylesheetTag("application.css") %>
+    <%= stylesheetTag("style.css") %>
     <meta name="csrf-param" content="authenticity_token" />
     <meta name="csrf-token" content="<%= authenticity_token %>" />
   </head>
@@ -13,7 +13,7 @@
 
     <%= partial("footer.html") %>
   </body>
-  <%= javascriptTag("application.js") %><%= javascriptTag("mainPage.js") %>
+  <%= javascriptTag("application.js") %>
 </html>
 
 <%= contentOf("scripts") %>

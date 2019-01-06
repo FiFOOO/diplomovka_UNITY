@@ -10,7 +10,6 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
 
@@ -18,7 +17,6 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
 }
@@ -60,8 +58,34 @@ body > .container {
   display: inline-block;
 }
 
-// NOTY
+.project {
+  text-align: center;
+  p {
+    font-size: 18px;
+  }
+  span {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 25px;
+    display: block;
+  }
+  span.small {
+    font-size: 20px;
+  }
+  .title {
+    margin-bottom: 50px;
+  }
+  .goal {
+    width: 70%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-style: italic;
+    font-size: 20px;
+    display: inline-block;
+  }
+}
 
+// NOTY
 .noty_theme__mint.noty_bar .noty_body {
   padding: 17px;
   font-size: 15px;
