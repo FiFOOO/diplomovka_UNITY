@@ -1,0 +1,20 @@
+\select@language {slovak}
+\contentsline {chapter}{\numberline {1}V\IeC {\'y}chodisk\IeC {\'a}}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}UNITY}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Vlastnosti UNITY}{1}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Nedeterminizmus}{1}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Absencia toku riadenia (control-flow)}{2}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Synchr\IeC {\'o}nnos\IeC {\v t} a asynchr\IeC {\'o}nnos\IeC {\v t}}{2}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}Stavy a priradenia}{2}{subsection.1.2.4}
+\contentsline {section}{\numberline {1.3}Telo programu}{2}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Declare-section}{3}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Always-section}{3}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}Initially-section}{4}{subsection.1.3.3}
+\contentsline {subsection}{\numberline {1.3.4}Assign-section}{5}{subsection.1.3.4}
+\contentsline {subsection}{\numberline {1.3.5}Uk\IeC {\'a}\IeC {\v z}ka programu}{5}{subsection.1.3.5}
+\contentsline {section}{\numberline {1.4}Syntaktick\IeC {\'y} strom}{5}{section.1.4}
+\contentsline {section}{\numberline {1.5}Syntaktick\IeC {\'a} anal\IeC {\'y}za}{5}{section.1.5}
+\contentsline {section}{\numberline {1.6}Model checking}{5}{section.1.6}
+\contentsline {section}{\numberline {1.7}LTSmin}{5}{section.1.7}
+\contentsline {subsection}{\numberline {1.7.1}Back-ends}{5}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {1.7.2}Front-ends}{5}{subsection.1.7.2}
