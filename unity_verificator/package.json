@@ -18,6 +18,7 @@
     "react": "^16.7.0-alpha.0",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.7.0-alpha.0",
+    "react-event-timeline": "^1.6.3",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
