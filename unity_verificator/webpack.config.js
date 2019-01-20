@@ -17,7 +17,7 @@ const configurator = {
             ]
         };
 
-        Glob.sync('./assets/src/*/*.*').forEach(entry => {
+        Glob.sync('./assets/src/pages/*.*').forEach(entry => {
             let key = entry.replace(
                 /(\.\/assets\/src\/(layouts|pages|components)\/)|\.(ts|js[x]|s[ac]ss|go)/g,
                 ''

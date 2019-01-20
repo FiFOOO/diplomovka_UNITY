@@ -5,22 +5,26 @@ export default function ProgressPageLayout() {
   return (
     <Timeline>
       <TimelineEvent
-        title="John Doe sent a SMS"
-        createdAt="2016-09-12 10:06 PM"
+        title="www stránka diplomovky - stav online"
+        createdAt="20. januára 2019"
         icon={<i className="material-icons md-18" />}
       >
-        I received the payment for $543. Should be shipping the item within a
-        couple of hours.
+        Svoje stránku na diplomovú prácu som nasadil online.
       </TimelineEvent>
       <TimelineEvent
-        title="You sent an email to John Doe"
-        createdAt="2016-09-11 09:06 AM"
+        title="1 kapitola práce"
+        createdAt="18. januára 2019"
         icon={<i className="material-icons md-18" />}
       >
-        Like we talked, you said that you would share the shipment details? This
-        is an urgent order and so I am losing patience. Can you expedite the
-        process and pls do share the details asap. Consider this a gentle
-        reminder if you are on track already!
+        Dokončenie prvej kapitoly o dĺžke 16 strán z diplomovej práce.
+      </TimelineEvent>
+      <TimelineEvent
+        title="Stretnutie so školiteľom"
+        createdAt="13. decembra 2018"
+        icon={<i className="material-icons md-18" />}
+      >
+        Na stretunutí sme sa dohodli o kapitole, ktorú budem písať ako prvá a
+        ako ukážku na predmet projektový seminár 2.
       </TimelineEvent>
     </Timeline>
   );
