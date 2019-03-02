@@ -1,39 +1,37 @@
-\babel@toc {slovak}{}
-\contentsline {chapter}{\numberline {1}\IeC {\'U}vod}{1}{chapter.1}% 
-\contentsline {chapter}{\numberline {2}Motiv\IeC {\'a}cia}{2}{chapter.2}% 
-\contentsline {chapter}{\numberline {3}V\IeC {\'y}chodisk\IeC {\'a}}{3}{chapter.3}% 
-\contentsline {section}{\numberline {3.1}UNITY}{3}{section.3.1}% 
-\contentsline {section}{\numberline {3.2}Vlastnosti UNITY}{3}{section.3.2}% 
-\contentsline {subsection}{\numberline {3.2.1}Nedeterminizmus}{4}{subsection.3.2.1}% 
-\contentsline {subsection}{\numberline {3.2.2}Absencia riadenia toku (control-flow)}{4}{subsection.3.2.2}% 
-\contentsline {subsection}{\numberline {3.2.3}Synchr\IeC {\'o}nnos\IeC {\v t} a asynchr\IeC {\'o}nnos\IeC {\v t}}{4}{subsection.3.2.3}% 
-\contentsline {subsection}{\numberline {3.2.4}Stavy a priradenia}{4}{subsection.3.2.4}% 
-\contentsline {section}{\numberline {3.3}Telo programu}{5}{section.3.3}% 
-\contentsline {subsection}{\numberline {3.3.1}Declare-section}{5}{subsection.3.3.1}% 
-\contentsline {subsection}{\numberline {3.3.2}Always-section}{6}{subsection.3.3.2}% 
-\contentsline {subsection}{\numberline {3.3.3}Initially-section}{7}{subsection.3.3.3}% 
-\contentsline {subsection}{\numberline {3.3.4}Assign-section}{7}{subsection.3.3.4}% 
-\contentsline {subsubsection}{Kvantifikovan\IeC {\'e} priradenia}{8}{section*.8}% 
-\contentsline {subsubsection}{Kvantifikovan\IeC {\'e} v\IeC {\'y}razy}{8}{section*.9}% 
-\contentsline {subsection}{\numberline {3.3.5}Vykonanie programu UNITY}{9}{subsection.3.3.5}% 
-\contentsline {subsubsection}{Pevn\IeC {\'y} bod}{10}{section*.10}% 
-\contentsline {subsection}{\numberline {3.3.6}Uk\IeC {\'a}\IeC {\v z}ka programu}{10}{subsection.3.3.6}% 
-\contentsline {section}{\numberline {3.4}Kompil\IeC {\'a}tory}{10}{section.3.4}% 
-\contentsline {subsection}{\numberline {3.4.1}\IeC {\v S}trukt\IeC {\'u}ra kompil\IeC {\'a}toru}{11}{subsection.3.4.1}% 
-\contentsline {subsection}{\numberline {3.4.2}Lexik\IeC {\'a}lna anal\IeC {\'y}za, syntaktick\IeC {\'a} anal\IeC {\'y}za a s\IeC {\'e}mantick\IeC {\'a} anal\IeC {\'y}za}{12}{subsection.3.4.2}% 
-\contentsline {subsubsection}{Lexik\IeC {\'a}lna anal\IeC {\'y}za}{12}{section*.13}% 
-\contentsline {subsubsection}{Syntaktick\IeC {\'a} anal\IeC {\'y}za}{12}{section*.14}% 
-\contentsline {subsubsection}{S\IeC {\'e}mantick\IeC {\'a} anal\IeC {\'y}za}{13}{section*.15}% 
-\contentsline {subsection}{\numberline {3.4.3}Syntaktick\IeC {\'y} strom}{13}{subsection.3.4.3}% 
-\contentsline {subsubsection}{\IeC {\v S}trukt\IeC {\'u}ra syntaktick\IeC {\'e}ho stromu}{13}{section*.16}% 
-\contentsline {section}{\numberline {3.5}Interpr\IeC {\'e}tre}{14}{section.3.5}% 
-\contentsline {subsection}{\numberline {3.5.1}Model checking}{15}{subsection.3.5.1}% 
-\contentsline {subsubsection}{V\IeC {\'y}hody}{15}{section*.18}% 
-\contentsline {subsubsection}{Nev\IeC {\'y}hody}{15}{section*.19}% 
-\contentsline {subsection}{\numberline {3.5.2}LTSmin}{16}{subsection.3.5.2}% 
-\contentsline {subsubsection}{Back-ends}{17}{section*.21}% 
-\contentsline {subsubsection}{Front-ends}{17}{section*.22}% 
-\contentsline {subsubsection}{PINS2PINS}{18}{section*.23}% 
-\contentsline {chapter}{\numberline {4}Implement\IeC {\'a}cia}{19}{chapter.4}% 
-\contentsline {chapter}{\numberline {5}Interpreter UNITY}{20}{chapter.5}% 
-\contentsline {chapter}{\numberline {6}Z\IeC {\'a}ver}{21}{chapter.6}% 
+\select@language {slovak}
+\contentsline {chapter}{\numberline {1}\IeC {\'U}vod}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Motiv\IeC {\'a}cia}{2}{chapter.2}
+\contentsline {chapter}{\numberline {3}V\IeC {\'y}chodisk\IeC {\'a}}{3}{chapter.3}
+\contentsline {section}{\numberline {3.1}UNITY}{3}{section.3.1}
+\contentsline {section}{\numberline {3.2}Vlastnosti UNITY}{3}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Nedeterminizmus}{4}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Absencia riadenia toku (control-flow)}{4}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Synchr\IeC {\'o}nnos\IeC {\v t} a asynchr\IeC {\'o}nnos\IeC {\v t}}{4}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Stavy a priradenia}{4}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}Telo programu}{5}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Declare-section}{5}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Always-section}{6}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Initially-section}{7}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Assign-section}{7}{subsection.3.3.4}
+\contentsline {subsubsection}{Kvantifikovan\IeC {\'e} priradenia}{8}{section*.7}
+\contentsline {subsubsection}{Kvantifikovan\IeC {\'e} v\IeC {\'y}razy}{8}{section*.8}
+\contentsline {subsection}{\numberline {3.3.5}Vykonanie programu UNITY}{9}{subsection.3.3.5}
+\contentsline {subsubsection}{Pevn\IeC {\'y} bod}{9}{section*.9}
+\contentsline {section}{\numberline {3.4}Interpreter}{10}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\IeC {\v S}trukt\IeC {\'u}ra interpretra}{10}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Lexik\IeC {\'a}lna anal\IeC {\'y}za, syntaktick\IeC {\'a} anal\IeC {\'y}za a s\IeC {\'e}mantick\IeC {\'a} anal\IeC {\'y}za}{12}{subsection.3.4.2}
+\contentsline {subsubsection}{Lexik\IeC {\'a}lna anal\IeC {\'y}za}{12}{section*.11}
+\contentsline {subsubsection}{Syntaktick\IeC {\'a} anal\IeC {\'y}za}{12}{section*.12}
+\contentsline {subsubsection}{S\IeC {\'e}mantick\IeC {\'a} anal\IeC {\'y}za}{12}{section*.13}
+\contentsline {subsection}{\numberline {3.4.3}Syntaktick\IeC {\'y} strom}{13}{subsection.3.4.3}
+\contentsline {subsubsection}{\IeC {\v S}trukt\IeC {\'u}ra syntaktick\IeC {\'e}ho stromu}{13}{section*.14}
+\contentsline {subsection}{\numberline {3.4.4}Model checking}{13}{subsection.3.4.4}
+\contentsline {subsubsection}{V\IeC {\'y}hody}{14}{section*.16}
+\contentsline {subsubsection}{Nev\IeC {\'y}hody}{15}{section*.17}
+\contentsline {subsection}{\numberline {3.4.5}LTSmin}{15}{subsection.3.4.5}
+\contentsline {subsubsection}{Back-ends}{15}{section*.19}
+\contentsline {subsubsection}{Front-ends}{16}{section*.20}
+\contentsline {subsubsection}{PINS2PINS}{17}{section*.21}
+\contentsline {chapter}{\numberline {4}Implement\IeC {\'a}cia}{18}{chapter.4}
+\contentsline {chapter}{\numberline {5}Interpreter UNITY}{19}{chapter.5}
+\contentsline {chapter}{\numberline {6}Z\IeC {\'a}ver}{20}{chapter.6}

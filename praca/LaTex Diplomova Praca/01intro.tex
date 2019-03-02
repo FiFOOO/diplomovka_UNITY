@@ -51,11 +51,15 @@ initially, assign. Telo programu obsahuje aj program-name, názov programu,
 ktorý môžeme vynechať, v tom prípade z tela programu vynechávame aj sekciu program-name. 
 UNITY program má nasledujúcu formu:
 
-\begin{figure}[h]
-\centerline{\includegraphics[width=0.6\textwidth]{images/screen1}}
-\caption[Ukážka tela programu]{Ukážka tela programu}
-\label{obr:programbody}
-\end{figure}
+\begin{lstlisting}
+Program 				program-name
+	declare 			declare-section
+	always	 		always-section
+	initially 		initially-section
+	assign 			assign-section
+end
+\end{lstlisting}
+
 
 \subsection{Declare-section}
 
@@ -204,56 +208,61 @@ alebo \textbf{Fixed Point}. Tento bod predstavuje stav programu, kedy sa aktuál
 už nikdy nezmení. V našom prípade to bude znamenať ukončenie programu.
 
 
-\subsection{Ukážka programu}
-Nasledujúci UNITY program predsavuje Euclidovský algoritmus pre nájdenie najväčšieho spoločného deliteľa čísel X, Y:
+\begin{lstlisting}
+Program 				GCD
+	declare 			x, y : integer
+	initially	 	x, y = X, Y
+	assign 			x := x - y if x > y
+				||		y := y - z if y > x
+end
+\end{lstlisting}
+
+\section{Interpreter}
+Interpreter je počítačový program, ktorý interpretuje iný program napísaný 
+v nejakom programovacom jazyku. Interpretre môžu program interpretovať riadok 
+po riadku alebo preložia program do nejakého medzikódu a tento medzikód potom vykonávajú. 
+Ak je v programe syntaktická chyba, prvý druh interpretra vykoná program po túto syntaktickú 
+chybu a zahlási chybu na príslušnom riadku, druhý druh interpretra program nezačne vykonávať a
+počas prekladu do medzikódu zahlási chybu.
+
+Programy vykonávané interpretrom bežia väčšinou pomalšie, ako kompilované programy.
+
+Interpreter môže byť vo všeobecnosti interpretátorom ľubovoľného formalizovaného jazyka, 
+napríklad interpreter matematických výrazov. Známe interpretre: PHP, Python MATLAB, Perl...
+
 \begin{figure}[h]
-\centerline{\includegraphics[width=0.7\textwidth]{images/screen2}}
-\caption[GCD algoritmus]{GCD algoritmus}
-\label{obr:gcd}
+\centerline{\includegraphics[width=0.4\textwidth]{images/intepreter}}
+\caption[intepreter]{Štruktúra intepretra}
+\label{obr:intepreter}
 \end{figure}
 
-\section{Kompilátory}
-Softvér, ktorý transformuje zdrojový kód v jednom programovacom jazyku do ekvivalentného zápisu v inom
-programovacom jazyku. Pojem kompilátor sa najčastejšie používa pre prekladače, ktorých zdrojovým jazykom 
-je vysokoúrovňový jazyk a cieľovým jazykom je nízkoúrovňový jazyk 
-(napr. jazyk symbolických inštrukcií, objektový kód alebo strojový kód) 
-za účelom vytvorenia spustiteľného programu \cite{br3}. Výhodov skompilovanej aplkácie je podpora 
-na rôznych zariadeniach. Kompilované programy sú rádovo 10 - 100x rýchlejšie ako interpretované programy.
-
-\begin{figure}[h]
-\centerline{\includegraphics[width=0.6\textwidth]{images/multi-passcompiler}}
-\caption[Kopmilátor]{Kopmilátor}
-\label{obr:kompilator}
-\end{figure}
-
-\subsection{Štruktúra kompilátoru}
-Kompilátor sa skladá z troch častí: front-end, middle-end a back-end.
+\subsection{Štruktúra interpretra}
+Interpreter sa skladá z troch častí: front-end, middle-end a back-end.
 
 \begin{enumerate}
 	\item Front-end (Predná časť) - overuje syntax a sémantiku špecifickú pre daný zdrojový kód. 
 	Pokiaľ je program na vstupe syntakticky nesprávny, obsahuje syntaktickú chybu, 
-	kompilátor by mal vhodným spôsobom na to reagovať. 
+	interpreter by mal vhodným spôsobom na to reagovať. 
 	Predná časť spravidla zahŕňa lexikálnu analýzu, syntaktickú analýzu a sémantickú analýzu.
-	Výstupom prác prednej časti kompilátoru býva program v intermediárnom kóde, 
-	ktorý je poskytovaný na spracovanie nasledujúcim častiam kompilátora.
+	Výstupom prác prednej časti interpretru býva program v intermediárnom kóde, 
+	ktorý je poskytovaný na spracovanie nasledujúcim častiam intrepretru.
 
 	\item Middle-end (Stredná časť) - vykonáva optimalizácie nad intermediárnym kódom. 
 	Tieto optimalizácie sú nezávislé na architektúre cieľového počítača. 
 	Príkladom optimalizácií v strednej časti prekladu je odstraňovanie zbytočných 
-	alebo nedosiahnuteľných častí kódu, či optimalizácia cyklov. Výstupom tejto časti kompilátora 
-	je "optimalizovaný" intermediárny kód, ktorý je následne používaný zadnou časťou kompilátora.
+	alebo nedosiahnuteľných častí kódu, či optimalizácia cyklov. Výstupom tejto časti intrepretra 
+	je "optimalizovaný" intermediárny kód, ktorý je následne používaný zadnou časťou intrepretra.
 
 	\item Back-end (Zadná časť) -  môže vykonávať dodatočnú analýzu a optimalizácie, 
 	ktoré sú špecifické pre cieľový počítač. V každom prípade je však jej hlavnou úlohou 
-	generovanie cieľového kódu. Typicky je jej výstupom strojový kód pre konkrétny procesor.
+	generovanie cieľového kódu.
 \end{enumerate}
 
 \subsection{Lexikálna analýza, syntaktická analýza a sémantická analýza}
 
 \subsubsection{Lexikálna analýza}
 Lexikálna analýza je činnosť, ktorú má na starosť tzv. lexikálny analyzátor - 
-je súčasťou prekladača (komplilátora). Lexikálny analyzátor rozdelí vstupnú postupnosť znakov na \textbf{lexémy} 
-- lexikálne jednotky (napr. identifikátory, čísla, kľúčové slová, operátory). 
+je súčasťou prekladača. Lexikálny analyzátor rozdelí vstupnú postupnosť znakov na \textbf{lexémy}. 
 Tieto lexémy sú reprezentované ve forme tokenov (symbolov), tie sú poskytnuté 
 ku spracovaniu syntaktickému analyzátoru.
 
@@ -304,19 +313,6 @@ Nasledujúci obrázok vychýdza z daného kódu
 \caption[Syntaktický strom]{Syntaktický strom}
 \label{obr:tree}
 \end{figure}
-
-\section{Interprétre}
-Interpreter je počítačový program, ktorý interpretuje iný program napísaný 
-v nejakom programovacom jazyku. Interpretre môžu program interpretovať riadok 
-po riadku alebo preložia program do nejakého medzikódu a tento medzikód potom vykonávajú. 
-Ak je v programe syntaktická chyba, prvý druh interpretra vykoná program po túto syntaktickú 
-chybu a zahlási chybu na príslušnom riadku, druhý druh interpretra program nezačne vykonávať a
-počas prekladu do medzikódu zahlási chybu.
-
-Programy vykonávané interpretrom bežia väčšinou pomalšie, ako kompilované programy.
-
-Interpreter môže byť vo všeobecnosti interpretátorom ľubovoľného formalizovaného jazyka, 
-napríklad interpreter matematických výrazov. Známe interpretre: PHP, Python MATLAB, Perl...
 
 \subsection{Model checking}
 Overovanie modelov alebo model checking je automatizovaná metóda formálnej verifikácie 

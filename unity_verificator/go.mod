@@ -1,1 +1,0 @@
-module github.com/Filip/diplomovka_UNITY/unity_verificator
