@@ -1,11 +1,23 @@
-\select@language {slovak}
+\babel@toc {slovak}{}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces intepreter}}{10}{figure.caption.16}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Syntaktick\IeC {\'y} strom}}{13}{figure.caption.21}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Formula AFp}}{15}{figure.caption.24}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Formula AGp}}{15}{figure.caption.24}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Formula EFp}}{16}{figure.caption.25}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Formula EGp}}{16}{figure.caption.25}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces PINS architekt\IeC {\'u}ra (obr\IeC {\'a}zok bol prevzat\IeC {\'y} zo zdroja \cite {br5})}}{17}{figure.caption.26}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces PINS2PINS (obr\IeC {\'a}zok bol prevzat\IeC {\'y} zo zdroja \cite {br5})}}{19}{figure.caption.30}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces intepreter}}{11}{figure.caption.10}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Syntaktick\IeC {\'y} strom}}{14}{figure.caption.15}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces PINS architekt\IeC {\'u}ra}}{16}{figure.caption.18}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces PINS2PINS}}{17}{figure.caption.22}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Podstr\IeC {\'a}nka Aplik\IeC {\'a}cia}}{35}{figure.caption.43}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Trieda Unity}}{36}{figure.caption.44}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Trieda Node}}{37}{figure.caption.45}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Initially - Pole A}}{38}{figure.caption.46}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Kvantifikovan\IeC {\'e} priradenie v AST}}{38}{figure.caption.47}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces GCD v jazyku Promela}}{40}{figure.caption.48}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Prv\IeC {\'a} \IeC {\v c}as\IeC {\v t} simul\IeC {\'a}cie NuSMV}}{41}{figure.caption.49}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Druh\IeC {\'a} \IeC {\v c}as\IeC {\v t} simul\IeC {\'a}cie NuSMV}}{41}{figure.caption.50}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

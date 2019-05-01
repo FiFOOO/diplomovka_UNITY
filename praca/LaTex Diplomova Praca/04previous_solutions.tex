@@ -1,1 +1,339 @@
-\chapter{Interpreter UNITY}\label{chap:motivation}
+\chapter{Interpreter UNITY}\label{chap:unity}
+
+Táto kapitola obsahuje popis postupu vytvárania interpretera pre verifikačný nástroj UNITY, prieskum 
+dostupných knižníc na verifikáciu CTL logiky a ich základné funkcie a vlastnosti.
+
+\section{Základné informácie}
+V predchádzajúcej kapitole sme sa dozvedeli základné pojmy interpretera, knižníc, ktoré sú k dispozícií a samotného 
+programu UNITY. Teraz sme všetky tieto znalosti uviedli do teoretického plánu pre verefikačný 
+nástroj pre UNITY. Čo sme si predstavovali pod pojmom verifikačný nástroj? Išlo o nástroj, ktorý mal kontrolovať, či daný
+program spĺňa všetky spomenuté vlastnosti programu (FP, Unless, Ensures, Leads-to). K dosiahnutiu potrebných výsledkov bolo za potrebu 
+vytvoriť pre verifikačný nástroj interpreter, ktorý daný program načítal a spracoval. Vrátené dáta boli 
+vyhodnotené na základe použitej knižnice zo zbierky nástrojov, ktoré poskytuje LTSmin. 
+
+\section{Úprava jazyku UNITY}
+Pre ciele tejto práce bolo potrebné zmeniť niektoré syntaktické prvky a vlastnosti jazyku UNITY:
+
+\begin{itemize}
+    \item Náhodné hodnoty neinicializovanej premennej
+    \item Syntax always seckcie
+    \item Syntax program seckie
+\end{itemize}
+
+\subsection{Náhodné hodnoty neinicializovanej premennej}
+Ako už vieme ak je deklarovaná premenná ale nie je inicializovaná podľa vlastností UNITY by mala táto 
+premenná nadobudnúť náhodnú hodnotu, avšak pri riešení niektorých úloh by táto vlastnosť mohla dané 
+výsledky programu znehodnotiť. Problém nastával v rozsahu náhodných čísiel. Ak bola daná premenná 
+deklarovaná ako integer nevedeli sme presne určiť najsprávnejšie riešenie pre tento rozsah čísiel. Preto 
+sme túto vlastnosť upravili nasledovne. V implementácií bolo potrebné každú deklarovanú premennú inicializovať. 
+Týmto sme sa úplne vyhli náhodne generovaným hodnotám pre deklarované premenne.
+
+\subsection{Syntax always sekcie}
+Sekcia always slúži na vytvorenie tzv. transparentných premenných, ktoré sú definované názvom premennej na ľavej strane 
+a na pravej strane sú jednotlivé výrazy. Toto priradenie bolo definované znakom rovnosti \texttt{=}. V našom prípade, aby parser
+interpretera nemal problém rozlišovať medzi operátormi \texttt{=>, <=, !=, ==} a znakom rovnosti sme znak rovnosti 
+zmenili na \texttt{:=} tak isto ako tomu je v assign sekcii.
+
+\subsection{Syntax program sekcie}
+V ukážke programu máme sekciu program, tá obsahuje program-name, názov programu, ktorý sa môže vynechať, lenže 
+aby bol program kompletný zo strany syntaxe bola táto zložka povinná.
+
+\section{Postup pri vytváraní interpretera}
+
+\subsection{Proces fungovania}
+Interpreter je jadro celého verifikačného nástroju pre programovací jazyk UNITY. 
+Obsahuje tieto časti:
+
+\subsubsection{Spracovanie vstupného textu - telo programu}
+Interpreter vstupný text prečíta, rozdelí na tokeny, ktoré parser spracuje, skontroluje syntax a vyhodnotí 
+či daný program neobsahuje chybu. Výsledkom parseru bude vygenerovanie abstraktného syntaktického stromu - AST.
+
+\subsubsection{AST}
+Vygenerovaný abstraktný syntaktický strom obsahuje celé telo programu. Koreň stromu je program a 
+listy sú sekcie programu, tie obsahujú všetky priradenia danej sekcie. Algoritmus, ktorý 
+tento strom prechádza vygeneruje cieľový kód pre zvolenú knižnicu.
+
+\subsubsection{Cieľový kód}
+Tento kód musí spĺňať všetky vlastnosti zvolenej knižnice. Každá z knižníc LTSmin využíva odlišný 
+paralelný programovací jazyk alebo zápis programu do špecifického modelu. Preto je potrebné cieľový kód 
+upraviť podľa syntaktických pravidiel zvolenej knižnice. Výsledkom kódu je program sformalizovaný podľa 
+zvolenej knižnice.
+
+\subsubsection{Vykonanie kódu}
+Knižnice obsahujú nástroje, ktoré vygenerovaný kód vykonajú. Výsledkami sú vlastnosti programu.
+
+\subsection{Skúmanie dostupných knižníc LTSmin}
+Pri výbere bolo viacero možností knižníc, ktoré zvoliť. Hlavnou podmienkou ale bolo aby knižnica spĺňala 
+temporálnu logiku CTL. 
+
+\subsubsection{DiViNe}
+Jedným z príkladov bol model checker DiViNe, ktorý je efektívny aj na veľmi náročné 
+logické formule. DiViNe nie je náročný na výpočtovú silu a preto je vhodný na používanie na jednom 
+počítači alebo sieti výpočtových staníc. Model môže byť vytvorený pomocou DVE modelovacieho jazyka. 
+Avšak DiViNe je hlavne zameraný na temporálnu logiku LTL aj keď z istej časti dokáže pracovať s CTL 
+nie je pre nás vhodný model checker, pretože aj zapisovanie do jazyku DVE nie je jednoduché a dostupná 
+dokumentácia neobsahuje dostatok informácií.
+
+\subsubsection{opaal}
+Tento model checker zaručuje ciele, pre ktoré sa oplatí používať ako je napr.
+Rapid prototyping a Easy to learn. Je písaný v jazyku Python, čo by nám niekoľko vecí 
+uľahčilo ale jeho hlavnými obmedzeniami sú, že dokáže pracovať iba s časovými automatmi 
+a je implementovateľný iba na Ubuntu 12.04 a Ubuntu 14.04.
+
+\subsubsection{SpinS}
+SpinS je model checker, ktorý bol pôvodne vytvorený z knižnice SpinJa, písaná v jazyku JAVA. Obe tieto 
+knižnice sú pôvodne vytvorené z model checker-u Spin, ktorým je základom paralelný programovací jazyk
+Promela. Tento jazyk je jednoduchý a vysoko efektívny na logiku LTL. Hlavnou podmienkou práce bolo
+aby daná knižnica vedela pracovať na úrovni logiky CTL. To sa vďaka tomuto jazyku dá jednoducho docieliť.
+V prípade, že každé jedno priradenie z jazyku UNITY vložíme do nekonečného cyklu, bežiaceho vlákna zaručíme 
+všetky potrebné vlastnosti pre logiku CTL a zároveň jazyku UNITY. Ak uvažujeme nad tým, že UNITY program 
+sa skladná z množiny priradení a každé toto priradenie vložíme do samostatného vlákna, ktoré
+sa bude vykonávať nepretržite v istom okamihu sa zaručene dostaneme do FP a dosiahneme 
+požadovaných výsledkov. Ibaže pri overovaní vlastnosti nám nastali komplikácie a z tohoto dôvodu sme danú 
+knižnicu nevyužili na overovanie vlastností, ale iba testovanie a debugovanie programov písaných v Promela.
+
+\section{Promela - Spin}
+\subsection{Promela}
+Je to verifikačný programovací jazyk zameraný na tvorbu modelov pre Spin model checker. Jeho základnými
+vlastnosťami sú:
+
+\begin{itemize}
+    \item asynchrónne vykonávanie programu
+    \item zdieľané premenné
+    \item komunikačné kanále (channels)
+\end{itemize}
+
+Jeho úlohou je overiť logiku paralelných systémov. Na to slúži Spin, ktorý daný program vykoná. 
+Nasledujúca tabuľka (\ref{obr:tabdatatypes}) zobrazuje dátové typy, ktoré Promela podporuje.
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Name} & \textbf{Size (bits)} & \textbf{Usage} & \textbf{Range} \\ \hline
+    bit           & 1                    & unsigned       & 0..1           \\ \hline
+    bool          & 1                    & unsigned       & 0..1           \\ \hline
+    byte          & 8                    & unsigned       & 0..255         \\ \hline
+    mtype         & 8                    & unsigned       & 0..255         \\ \hline
+    short         & 16                   & signed         & -215..215 - 1  \\ \hline
+    int           & 32                   & signed         & -215..215 - 1  \\ \hline
+    \end{tabular}
+    \begin{table}[!h]
+		\caption[Dátové typy]{Dátové typy}
+		\label{obr:tabdatatypes}
+	\end{table}
+\end{center}
+
+\subsubsection{Popis jazyku Promela}
+Operátory a priradenia sú veľmi podobné ako v jazyku C alebo JAVA. Premenné musia byť definované
+typovo a jednotlivé priradenia oddelené bodkočiarkou.
+
+\begin{lstlisting}
+    int x = 10;
+    int a, b = 1, 2;
+\end{lstlisting}
+
+Taktiež môžu byť definované globálne premenné, alebo funkcie podobne ako v jazyku C za pomoci 
+\texttt{define}.
+
+\begin{lstlisting}
+    #define N 10
+    #define sum(a, b) ((a) + (b))
+\end{lstlisting}
+
+Ak chceme takúto funkciu definovať viacriadkovo použijeme \texttt{inline}.
+
+\begin{lstlisting}
+    inline sum(a,b) {
+        a + b
+    }
+\end{lstlisting}
+
+V Promela je možné vytvoriť proces \texttt{proctype}, ktorý je buď definovaný ako funkcia a 
+následne spustená v \texttt{init} alebo priamo funkciu napísať a priamo ju pustiť za pomoci 
+\texttt{active}.
+
+\begin{lstlisting}
+    byte n=0;
+    active proctype P() {
+        n = 1;
+        printf("Process P, n = %d\n", n);
+    }
+    proctype Q() {
+        n = 2;
+        printf("Process Q, n = %d\n", n);
+    }
+    init {
+        run Q();
+    }
+\end{lstlisting}
+
+Je tiež možné vykonávať atomické operácie za pomoci \texttt{atomic} do ktorého stačí obaliť operácie, 
+ktoré chceme vykonávať atomicky.
+
+\begin{lstlisting}
+    active proctype P() {
+        atomic {
+            n = 1;
+            printf("Process P, n = %d\n", n);
+        }
+    }
+\end{lstlisting}
+
+Cykly sa vykonávajú za pomoci \texttt{do}, ktoré obsahujú podmienky a v prípade, že sú \texttt{true}
+vykonajú sa priradenia. Každá nová podmienka a priradenie musí byť oddelené \texttt{::}. Takýto cyklus
+bude pokračovať nepretržite pokiaľ nebude zastavený pomocou \texttt{break}. 
+
+\begin{lstlisting}
+    do
+    :: condition -> statement
+    ...
+    :: a >= b -> max = a
+    od
+\end{lstlisting}
+
+Podmienené operácie uvedené v \texttt{if} sa vykonávajú nedeterministicky. 
+
+\begin{lstlisting}
+    if
+    :: condition -> statement
+    ...
+    :: a >= b -> max = a; branch = 1
+    :: a <= b -> max = b; branch = 2
+    fi;
+\end{lstlisting}
+
+Objekty sa vytvárajú nasledovne.
+
+\begin{lstlisting}
+    typedef MyStruct
+    {
+        short Field1;
+        byte  Field2;
+    }
+
+    init {
+        MyStruct x;
+        x.Field1 = 1;
+    }
+\end{lstlisting}
+
+\subsection{Spin}
+Je verifikačný nástroj, ktorý podporuje dizajn a verifikáciu asynchrónnych procesov. Verifikačné modely
+sú zamerané na dokazovanie správnosti iterácií procesov \cite{br9}. V stručnosti nám Spin slúžil
+ako verifikátor pre jazyk Promela. Pomocou neho sme boli schopný testovať a debugovať jednotlivé programy.
+Taktiež nám vedel poskytnúť základné informácie o danom testovanom algoritme ako je napr. počet stavov, procesov
+a premenných použitých v programe. V našom prípade nám to pomohlo či je daný program napísaný správne a efektívne.
+Príklad programu:
+
+\begin{lstlisting}
+    mtype = {red, yellow, green};
+    mtype light=green;
+    init {
+        do
+        :: if
+        :: light==red -> light=green
+        :: light==yellow -> light=red
+        :: light==green -> light=yellow
+        fi;
+        od
+    }
+\end{lstlisting}
+
+Daný program bolo možné spustiť príkazom \texttt{./spin tlight.pml}. Kde \texttt{tlight.pml} je súbor s programu
+s koncovkou \texttt{pml} známu pre Promela. Avšak v tomto prípade sa program zacyklí a to z dôvodu, že program
+bol spustený v tzv. simulation mode. Pre plné využitie model checker-a je potrebné program spustiť v tzv. exhaustive 
+verification mode, kedy využijeme všetky schopnosti model checker-a. K takémuto spusteniu sme mali dve možnosti:
+
+\begin{lstlisting}
+    spin -a tlight.pml
+    gcc -o pan pan.c
+    pan
+\end{lstlisting}
+
+alebo 
+
+\begin{lstlisting}
+    spin -search tlight.pml
+\end{lstlisting}
+
+V prvom prípade nám Spin vytvoril súbor \texttt{pan.c} v jazyku C, ten sme museli následne skompilovať príkazom 
+\texttt{gcc} a vráti nám spustiteľný súbor \texttt{pan}. V druhom prípade nám príkaz vráti priamo to isté ako 
+súbor \texttt{pam} a tým je výsledok verifikácie programu. Ak pri verifikácií nastal akýkoľvek error vytvorí
+sa súbor \texttt{trail}, ktorý popisuje všetky informácie o prípadnom deadlocku alebo vzniknutej chybe. Do súboru 
+\texttt{trail} je možné nahliadnuť príkazom \texttt{spin -t -p -l tlight.pml}. Ak by program obsahoval 
+príkaz \texttt{printf} vydeli by sme niekoľko veľa výstupov.
+
+\begin{lstlisting}
+    ...
+    printf("The light is now %e\n",light);
+    ...
+\end{lstlisting}
+
+Aby sme tomuto zabránili a otestovali výstupy bolo potrebné obmedziť počet krokov vykonaných 
+v programe a to príkazom \texttt{spin -u40 tlight.pml}, ktorý vykoná iba 40 krokov.
+
+\section{Výsledné použité knižnice}
+Po celkovom skúmaní knižníc sme dospeli k záveru, že ani jeden zo spomínaných model checher-ov nevyhovuje 
+nášmu cieľu. Preto týmto skúmanie neskončilo a výsledné použité knižnice boli S2N, NuSMV a programovací 
+jazyk Promela s pomocou Spin.
+
+\subsection{NuSMV}
+NuSMV je výsledkom reengineeringu a reimplementácie symbolického model checker-u SMV. NuSMV 
+bol aktualizovaný v troch častiach oproti SMV:
+
+\begin{itemize}
+    \item NuSMV má viacej funkcií, napr. CTL a LTL verfikáciu, ktoré zvyšujú schopnosť 
+    používateľa spolupracovať so systémom.
+    \item Systémová architektúra NuSMV je vysoko modulárna a otvorená. Ďalšou vlastnosťou je, 
+    že v NuSMV môže užívateľ riadiť a prípadne meniť poradie vykonávania niektorých systémových modulov.
+    \item Kvalita implementácie sa výrazne zvyšuje. NuSMV je veľmi robustný a dobre zdokumentovaný systém, 
+    ktorého kód je (relatívne) ľahko modifikovateľný.
+\end{itemize}
+
+NuSMV dokáže spracovať súbory napísané v jazyku SMV a umožňuje konštrukciu modelu s rôznymi metódami, 
+analýzou dosiahnuteľnosti, kontrolou modelu CTL, výpočtom kvantitatívnych charakteristík 
+modelu a generovaním protikladov \cite{br8}. Základné príkazy pre NuSMV:
+
+\begin{itemize}
+    \item \texttt{NuSMV -int [filename].smv} - načíta daný súbor do interaktívneho shell-u
+    \item \texttt{go} - prečíta a inicializuje NuSMV pre verifikáciu a simuláciu
+    \item \texttt{pick\_state [-v] [-r | -i]} - vyberie stav z množiny stavov
+    \begin{itemize}
+        \item[\textbullet] \texttt{-v} vypíše vybraný stav
+        \item[\textbullet] \texttt{-r} vyberie náhodný stav
+        \item[\textbullet] \texttt{-i} stav si vyberieme sami
+    \end{itemize}
+    \item \texttt{simulate [-r | -i] -k steps} - od aktuálneho stavu vygeneruje počet stavov zadaných 
+    prepínačom \texttt{-k}
+    \begin{itemize}
+        \item[\textbullet] \texttt{-r} každý nový vygenerovaný stav zvolí náhodne
+        \item[\textbullet] \texttt{-i} každý nový vygenerovaný stav si vyberieme sami
+    \end{itemize}
+    \item \texttt{show\_traces -v} - vypíše všetky vykonané kroky
+    \item \texttt{reset} - resetuje celý systém
+    \item \texttt{quit} - ukončí shell
+\end{itemize}
+
+Keďže NuSMV podporuje verifikáciu CTL zvolili sme si práve tento model checker na overovanie vlastností 
+jazyku UNITY. Bude hlavnou súčasťou verifikátora v našej aplikácií. Avšak NuSMV vie pracovať iba s jazykom SMV, 
+ktorý je na zápis UNITY programu príliš zložítý. Preto použijeme nástroj S2N na transformáciu z jazyka Promela
+na jazyk SMV.
+
+\subsection{S2N}
+Po skúmaní verifikačných nástrojov v zbierke LTSmin sme nenašli žiaden nám vyhovujúci nástroj. Väčšina týchto
+nástrojov nespĺňala požiadavku aby takýto verifikačný model checker dokázal overovať CTL logiku.
+Po hlbšom pátraní sme ale narazili na jeden nástroj, ktorý dokáže z modelu spísanom v jazyku Promela resp. Spin 
+vytvoriť CTL model. Tento nástroj sa volá S2N - Spin to NuSMV. 
+
+Spin a NuSMV sú dva najviac rozšírené model checker-y. Spin používa jazyk Promela, ktorý je určený 
+na modelovanie synchronizácie a koordinácie procesov. Promela má syntax podobnú jazyku C, čo uľahčuje vytváranie
+čítanie modelov. NuSMV poskytuje jazyk na opis stavových prechodných systémov. Spin a NuSMV sú veľmi pôsobivé 
+a úspešné vo svojich oblastiach. Zosúladenie ich výhod by bolo užitočné pre modelovanie. Preto vznikol
+nástroj S2N, ktorý dokáže preložiť modely v jazyku Promela do jazyka NuSMV. Toto spojenie prináša veľa 
+výhod. Na jednej strane je modelovanie zložitého systému v NuSMV tvrdou prácou, ktorá je náchylná na chyby. 
+Teraz máme pre model NuSMV jazyk vyššej úrovne. Na druhej strane S2N funguje tak, že rozširuje systém 
+Spin o schopnosť kontrolovať CTL a ďalšie vlastnosti NuSMV \cite{br7}.
+
+S2N podporuje väčšinu základných funkcií jazyku Promela. Ako sú napr. polia, všetky dátové typy, do a if, 
+proctype a aj komunikáciu pomocou kanálov. Avšak nepodporuje inline, typedef a printf, ktoré sme pre naše účely
+aj tak nepotrebovali. Všetky dostupné vlastnosti S2N nám vyhovovali na transformovanie Promela na NuSMV.

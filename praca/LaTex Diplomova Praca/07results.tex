@@ -1,0 +1,184 @@
+\chapter{Výsledky}\label{chap:conclusion}
+Verikikačný nástroj sme použili na dva programy. Prvý je GCD 
+(Greatest common divisor) a druhý Bubble sort. Pre oba tieto programy budeme chcieť
+verifikovať vlastnosti programu, t. j. FP a leads-to. 
+
+Na overenie vlastností sme použili nástroj NuSMV. Príkazom 
+\texttt{bin/NuSMV -int public/out/program.smv} sme sa dostali do interaktívneho shell-u. 
+Nasledujúce príkazy v shell-i nás doviedli k výsledkom, z ktorých sme dokázali FP a leads-to 
+overiť. Príkaz \texttt{show\_traces -v} nám vrátil všetky vykonané kroky. 
+Pre overenie vlastností sme uviedli iba niektoré časti krokov.
+
+\begin{lstlisting}
+    NuSMV > go
+    NuSMV > pick_state -r
+    NuSMV > simulate -r -k 3
+    NuSMV > show_traces -v
+\end{lstlisting}
+
+\section{GCD}
+GCD je jednoduchý algoritmus na výpočet najväčšieho spoločného deliteľa.
+\begin{lstlisting}
+    program         GCD
+        declare     x: integer, 
+                    y: integer
+        always      decx, decy := x > y, y > x
+        initially   x, y : 60, 48
+        assign      x := x - y if decx
+            []      y := y - x if decy
+    end
+\end{lstlisting}
+
+Po vykonaní 38 krokoch hodnoty x a y nadobudli rovnakú hodnotu. To znamená, že spoločný
+deliteľ bol nájdený.
+
+\begin{lstlisting}
+    -> State: 1.22 <-
+    x = 0sd32_12
+    y = 0sd32_48
+    .
+    -> State: 1.26 <-
+    x = 0sd32_12
+    y = 0sd32_36
+    ...
+    -> State: 1.39 <-
+    x = 0sd32_12
+    y = 0sd32_12
+    ...
+    -> State: 1.41 <-
+    x = 0sd32_12
+    y = 0sd32_12
+\end{lstlisting}
+
+Od kroku 1.39 sa hodnoty nezmenili, teda \textbf{nastáva FP}. Pre overenie vlastnosti 
+leads-to sme použili nasledujúci výraz.
+\begin{ceqn}
+    \begin{align*}
+        x \geq y \rightarrow y \geq x
+    \end{align*}
+\end{ceqn}
+
+Výraz platil vo všetkých krokoch teda \textbf{leads-to je splnené}.
+
+
+\section{Bubble sort}
+Bubble sort je algoritmus, ktorý slúži na utriedenie jednorozmerného poľa čísel. Jeho princípom je posúvať
+neutriedené čísla od najmenšieho po najväčšie. Využíva výmenný triediaci algoritmus, ak je
+jedno číslo väčšie ako to druhé tak im zamení miesto v poli. 
+
+V našom konkrétnom príklade má pole veľkosť N, kde N je 5, a čísla nadobúdali náhodnú hodnotu. 
+UNITY program v sekcii \textbf{assign} vytvorí $N-1$ priradení, ktoré kontrolujú či sa dané 
+dve čísla môžu zameniť.
+
+\begin{lstlisting}
+    program         BubbleSort
+        declare     N: integer, 
+                    a: array [0..N] of integer
+        initially   N: 5 []
+                    <|| k: 0 <= k < N :: a[k] = rand() >
+        assign      <[] i: 0 <= i < N - 1 :: 
+                        a[i], a[i + 1] = a[i + 1], a[i] 
+                        if a[i] > a[i + 1] >
+    end
+\end{lstlisting}
+
+Po spustení programu nám verfikátor vygeneroval pole \texttt{a}. 
+
+\begin{lstlisting}
+    a = [62, 72, 9, 83, 59]
+\end{lstlisting}
+
+Na začiatok sme simulovali 6 krokov.
+
+\begin{lstlisting}
+    // tu môžeme vidieť inicializáciu poľa
+    -> State: 1.4 <-
+    tmp = 0sd32_0
+    N = 0sd32_5
+    a[0] = 0sd32_62
+    a[1] = 0sd32_72
+    a[2] = 0sd32_0
+    a[3] = 0sd32_0
+    a[4] = 0sd32_0
+    .
+    // pole bolo inicializované v kroku 1.7, po opakovaní príkazu simulate -r -k 3
+    -> State: 1.7 <-
+    tmp = 0sd32_0
+    N = 0sd32_5
+    a[0] = 0sd32_62
+    a[1] = 0sd32_72
+    a[2] = 0sd32_9
+    a[3] = 0sd32_83
+    a[4] = 0sd32_59
+\end{lstlisting}
+
+Pre ďalšie výsledky sme simulovali program o ďalších 10 krokov.
+\begin{lstlisting}
+    // premenná tmp, ktorá slúži na usporiadanie poľa nadobúda hodnotu 83, čo znamená, že proces triedenia sa už začal
+    -> State: 1.17 <-
+    tmp = 0sd32_83
+    N = 0sd32_5
+    a[0] = 0sd32_62
+    a[1] = 0sd32_72
+    a[2] = 0sd32_9
+    a[3] = 0sd32_59
+    a[4] = 0sd32_83
+\end{lstlisting}
+
+Pre ďalšie výsledky sme simulovali program o 20 krokov.
+\begin{lstlisting}
+    // pole sa už začína utriedovať
+    -> State: 1.29 <-
+    tmp = 0sd32_72
+    N = 0sd32_5
+    a[0] = 0sd32_62
+    a[1] = 0sd32_9
+    a[2] = 0sd32_59
+    a[3] = 0sd32_72
+    a[4] = 0sd32_83
+    .
+    -> State: 1.37 <-
+    tmp = 0sd32_62
+    N = 0sd32_5
+    a[0] = 0sd32_9
+    a[1] = 0sd32_62
+    a[2] = 0sd32_59
+    a[3] = 0sd32_72
+    a[4] = 0sd32_83
+\end{lstlisting}
+
+Pole bolo utriedené po vykonaní 68 krokoch, každý ďalší krok sa už pole nezmenilo a 
+\textbf{nastáva FP}, kedy sa už žiadne vstupné hodnoty nezmenia.
+
+\begin{lstlisting}
+    -> State: 1.69 <-
+    tmp = 0sd32_62
+    N = 0sd32_5
+    a[0] = 0sd32_9
+    a[1] = 0sd32_59
+    a[2] = 0sd32_62
+    a[3] = 0sd32_72
+    a[4] = 0sd32_83
+    .
+    -> State: 1.77 <-
+    tmp = 0sd32_62
+    N = 0sd32_5
+    a[0] = 0sd32_9
+    a[1] = 0sd32_59
+    a[2] = 0sd32_62
+    a[3] = 0sd32_72
+    a[4] = 0sd32_83
+\end{lstlisting}
+
+
+
+Pre overenie vlastnosti leads-to sme použili nasledujúci výraz, kde A je pole \texttt{a}.
+\begin{ceqn}
+    \begin{align*}
+        A[i] \rightarrow \langle \exists j: j \geq i :: A[i] \geq A[j] \rangle
+    \end{align*}
+\end{ceqn}
+
+V krokoch 1.29, 1.37 a 1.69 môžeme vidieť, že existuje také $A[i]$, ktoré je väčšie ako 
+$A[j]$. A keďže tento výraz platí pre niekoľko krokov programu vlastnosť \textbf{leads-to je 
+splnená}.

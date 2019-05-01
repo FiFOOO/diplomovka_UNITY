@@ -7,6 +7,7 @@
 \usepackage{algorithmic}
 \usepackage{listings}
 \usepackage{amsmath}
+\usepackage{nccmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{multirow}
@@ -21,12 +22,23 @@
 \usepackage{natbib}
 \usepackage{enumitem}
 \usepackage{graphicx}
+% \usepackage{geometry}
+
+
+%  \geometry{
+%  a4paper,
+%  total={170mm,257mm},
+%  top=25mm,
+%  bottom=25mm,
+%  left=35mm,
+%  right=20mm
+% }
 
 
 \def\infinity{\rotatebox{90}{8}}
 
 \lstset{frame=tb,
-  language=Python,
+  language=C,
   aboveskip=3mm,
   belowskip=3mm,
   showstringspaces=false,
@@ -35,18 +47,20 @@
   numbers=none,
   breaklines=true,
   breakatwhitespace=true,
-  tabsize=3
+  tabsize=3,
+  inputencoding=utf8,
+  texcl=true
 }
 
 \setstretch{1.5}
 %\renewcommand\baselinestretch{1.5} % riadkovanie jeden a pol
 
 % pekne pokope definujeme potrebne udaje
-\newcommand\mftitle{Verifikačný nástroj pre UNITY}
+\newcommand\mftitle{Verifikačný nástroj pre formalizmus UNITY}
 \newcommand\mfthesistype{Diplomová práca}
 \newcommand\mfauthor{Bc. Filip Špaldoň}
 \newcommand\mfadvisor{doc. RNDr. Damas Gruska, PhD.}
-\newcommand\mfplacedate{Bratislava, 2017}
+\newcommand\mfplacedate{Bratislava, 2019}
 \newcommand\mfuniversity{UNIVERZITA KOMENSKÉHO V BRATISLAVE}
 \newcommand\mffaculty{FAKULTA MATEMATIKY, FYZIKY A INFORMATIKY}
 \newcommand{\sub}[1]{$_{\text{#1}}$}
@@ -84,7 +98,7 @@
 	\end{minipage}
 \end{center}
 \vfill
-2017 \hfill
+2019 \hfill
 \mfauthor
 \eject 
 % koniec obalu
@@ -160,13 +174,47 @@
 % koniec prehlasenia
 
 \chapter*{Poďakovanie}\label{chap:thank_you}
+Ďakujem školiteľovi doc. RNDr. Damasovi Gruskovi, PhD. za rady a pomoc počas riešenia mojej diplomovej práce. 
+Ďakujem aj svojím blízkym za morálnu podporu.
+
 %
 %\vfill\eject 
 %% koniec podakovania
 %
 \chapter*{Abstrakt}\label{chap:abstract_sk}
+\textbf{U}nbounded \textbf{N}ondeterministic 
+\textbf{I}terative \textbf{T}ransformations of the program state (UNITY) je programovací jazyk popísaný v knihe 
+Parallel Program Design - A Foundation a jeho autormi sú K. Mali Chandy a Jayadev Misra z University of Texas. 
+Jeho hlavnými znakmi sú nedeterminizmus, paralelné operácie, absencia control-flow, synchrónnosť
+a asynchrónnosť, stavy a priradenia. 
+
+Všetky tieto znaky bolo potrebné aplikovať do vytvoreného interpretera, ktorý sa staral o činnosť
+verifikátoru. Práca popisuje podrobnú implementáciu lexikálneho a syntaktického analyzátoru interpretera.
+Tiež obsahuje popis skúmaných knižníc a nástrojov LTSmin, výsledné použité knižnice S2N a NuSMV.
+Výsledný verifikátor dokáže pracovať s logikou výpočtového stromu (CTL). Všetky tieto ciele sme mohli 
+dosiahnuť vďaka webovej aplikácií postavenej na platformách GO, React, ktoré boli použité 
+na implementáciu verifikátora.
+
+\paragraph*{Kľúčové slová}: UNITY, CTL, LTSmin, S2N, NuSMV, intepreter, verifikátor
+
 
 \chapter*{Abstrakt EN}\label{chap:abstract_en}
+\textbf{U}nbounded \textbf{N}ondeterministic 
+\textbf{I}terative \textbf{T}ransformations of the program state
+(UNITY) is a programming language described in the book Parallel Program Design -
+A Foundation and the authors are K. Mali Chandy and Jayadev Misra from the University of 
+Texas. Its main features are nondeterminism, paralell operations, absence of control flow, 
+synchronity and asynchronity, states and assignments.
+
+All these features were needed to be applied to the created interpreter that was 
+managing the action of the verificator. The thesis describes a detailed implementation 
+of the lexical and syntactic analyser of the interpreter. It also contains a description 
+of the studied libraries and LTSmin tools, the resultant used libraries S2N and NuSMV. 
+The resultant verificator is able to work with the logics of computational tree (CTL). 
+All these aims were reached thanks to a web application based on the platform GO, React, 
+which were used for the implementation of the verificator.
+
+\paragraph*{Keywords}: UNITY, CTL, LTSmin, S2N, NuSMV, intepreter, verificator
 %
 %\vfill\eject 
 %
@@ -175,15 +223,17 @@
 %% koniec abstraktov
 
 \tableofcontents
+\listoffigures
+\listoftables
 
 \mainmatter
 
 % treba este prejst dokument ci je kod spravne formatovany
 \input 01intro.tex
-\input 02motivation.tex
+% \input 02motivation.tex
 \input 03issues_overview.tex
 \input 04previous_solutions.tex
-\input 05proposal.tex
+% \input 05proposal.tex
 \input 06implementation.tex
 \input 07results.tex
 \input 08conclusion.tex
@@ -196,18 +246,28 @@
 
 \begin{thebibliography}{5}
  
-\bibitem{br1}  A UNITY - Style Programming Logic for a Shared Dataspace Language - H. Conrad Cunningham and Gruia-Catalin Roman - 1989 
+\bibitem{br1}  H. Conrad Cunningham, Gruia-Catalin Roman. A UNITY - Style Programming Logic for a Shared Dataspace Language, 1989 
 
-\bibitem{br2}  Mechanizing UNITY in Isabelle - Lawrence C. Paulson - 2000
+\bibitem{br2}  Lawrence C. Paulson. Mechanizing UNITY in Isabelle, 2000
 
-\bibitem{br3}  PC Mag Staff. Encyclopedia: Definition of Compiler. 28 February 2017
+\bibitem{br3}  PC Mag Staff. Encyclopedia: Definition of Compiler, 28 February 2017
 
-\bibitem{br4}  Baier, C., Katoen, J.: Principles of Model Checking. 2008.
+\bibitem{br4}  Baier C., Katoen J. Principles of Model Checking, 2008
 
-\bibitem{br5}  Gijs Kant, Alfons Laarman, Jeroen Meijer, Jaco van de Pol, Stefan Blom1 and Tom van Dijk: LTSmin: High-Performance Language-Independent Model Checking
+\bibitem{br5}  Gijs Kant, Alfons Laarman, Jeroen Meijer, Jaco van de Pol, Stefan Blom1, Tom van Dijk. LTSmin: High-Performance Language-Independent Model Checking, 2015
+
+\bibitem{br6}  Michal Šuster. Intepreter UNITY, 2006
+
+\bibitem{br7} Yong Jiang, Zongyan Qiu. S2N: Model Transformation from SPIN to NuSMV, 2012
+
+\bibitem{br8} A. Cimatti, E. Clarke, F. Giunchiglia, M. Roveri. NuSMV: A New Symbolic Model Verifier, 1999
+
+\bibitem{br9} Gerard J. Holzmann. The Model Checker SPIN, May 1997
+
+\bibitem{br10} Vladimír Kvasnička. Jiří Pospíchal, Matematická logika, 2006
+
+\bibitem{br11} Martin Baláž. Dynamické Kripkeho štruktúry pre dobre založenú sémantiku, 2002
 
 \end{thebibliography}
-
-\listoffigures
 
 \end{document}
